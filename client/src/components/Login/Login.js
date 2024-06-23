@@ -1,81 +1,100 @@
 import React, { useState } from 'react';
-import { Card, Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Card, Container } from 'react-bootstrap';
+import { useNavigate, Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
-const Login = ({ navigateToDashboard }) => {
-  const [credentials, setCredentials] = useState({ username: '', password: '' });
-  const [role, setRole] = useState('user');
+const Login = () => {
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  });
+  const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCredentials({ ...credentials, [name]: value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
   };
 
-  const handleRoleChange = (e) => {
-    setRole(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login validation
-    navigateToDashboard(role);
+    const formElement = e.currentTarget;
+    if (formElement.checkValidity() === false) {
+        e.stopPropagation();
+    } else {
+        try {
+            const response = await axios.post('http://localhost:5000/api/users/login', form, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            if (response.status === 200) {
+                const data = response.data;
+                localStorage.setItem('token', data.token); // Store token
+                toast.success('Login successful!');
+                setTimeout(() => navigate('/dashboard'), 2000);
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 401) {
+                toast.error('Check your password!');
+            } else {
+                toast.error('An error occurred. Please try again.');
+            }
+        }
+    }
+    setValidated(true);
   };
 
   return (
-    <Container className="d-flex justify-content-center align-items-center vh-100">
-      <Card style={{ width: '30rem', boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}>
+    <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: '100vh' }}>
+      <Card style={{ width: '400px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <Card.Body>
-          <Card.Title className="text-center mb-4">Login</Card.Title>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formRole">
-              <Form.Check
-                type="radio"
-                label="Admin"
-                name="role"
-                value="admin"
-                checked={role === 'admin'}
-                onChange={handleRoleChange}
-                className="mb-2"
-                style={{ color: 'black' }}
-              />
-              <Form.Check
-                type="radio"
-                label="User"
-                name="role"
-                value="user"
-                checked={role === 'user'}
-                onChange={handleRoleChange}
-                className="mb-3"
-                style={{ color: 'black' }}
-              />
-            </Form.Group>
-            <Form.Group controlId="formUsername">
-              <Form.Label>Username</Form.Label>
+          <h2 className="text-center mb-4">Login</h2>
+          <Form noValidate validated={validated} onSubmit={handleSubmit}>
+            <Form.Group id="email">
+              <Form.Label>Email</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Enter username"
-                name="username"
-                value={credentials.username}
+                type="email"
+                name="email"
+                value={form.email}
                 onChange={handleChange}
                 required
+                isInvalid={validated && !form.email}
               />
+              <Form.Control.Feedback type="invalid">
+                Please provide a valid email.
+              </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group controlId="formPassword">
+            <Form.Group id="password">
               <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Password"
                 name="password"
-                value={credentials.password}
+                value={form.password}
                 onChange={handleChange}
                 required
+                isInvalid={validated && !form.password}
               />
+              <Form.Control.Feedback type="invalid">
+                Please provide a password.
+              </Form.Control.Feedback>
             </Form.Group>
-            <Button variant="primary" type="submit" className="mt-3 w-100">
+    
+            <Button className="w-100 mt-4" type="submit">
               Login
             </Button>
+    
           </Form>
+          <div className="text-center mt-3">
+            Don't have an account? <Link to="/register">Register</Link>
+          </div>
         </Card.Body>
       </Card>
+      <ToastContainer />
     </Container>
   );
 };
