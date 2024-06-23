@@ -2,16 +2,15 @@ import React from 'react';
 
 const AdminDashboard = () => {
   const handleButtonClick = () => {
-    // URL of the Excel file
-    const fileUrl = 'https://d.docs.live.net/a9265fc845e73a5f/Documents/excel2.xlsx';
+    // URL of the Excel file located in the public directory
+    const fileUrl = '/jpmcxl.xlsx';
     
     // Create a link element
     const link = document.createElement('a');
     link.href = fileUrl;
 
-
     // Set the download attribute for the link
-    link.setAttribute('download', 'excel2.xlsx');
+    link.setAttribute('download', 'jpmcxl.xlsx');
 
     // Append the link to the body
     document.body.appendChild(link);
