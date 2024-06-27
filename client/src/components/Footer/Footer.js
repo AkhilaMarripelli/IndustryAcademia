@@ -4,7 +4,7 @@ function Footer() {
             <div className="container p-4">
                 <div className="row">
                     <div className="col-lg-6 col-md-12 mb-4 mb-md-0">
-                        <h5 className="text-uppercase">Jaldhaara</h5>
+                        <h5 className="text-uppercase">INDUSTRY ACADEMIA</h5>
                         
                     </div>
                     <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
@@ -15,9 +15,6 @@ function Footer() {
                             </li>
                             <li>
                                 <p>Phone: +91 6281706245</p>
-                            </li>
-                            <li>
-                                <p>Email: info@jaldhaara.org</p>
                             </li>
                         </ul>
                     </div>

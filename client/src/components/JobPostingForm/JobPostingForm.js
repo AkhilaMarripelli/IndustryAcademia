@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const DonationForm = () => {
+const JobPostingForm = () => {
     const [formData, setFormData] = useState({
         title: '',
         Description: '',
-        RollNumber: '',
+        Role: '',
+        endDate:''
     });
 
     const [formErrors, setFormErrors] = useState({
         title: '',
         Description: '',
-        RollNumber: '',
+        Role: '',
+        endDate:''
     });
 
     const navigate = useNavigate();
@@ -27,7 +29,7 @@ const DonationForm = () => {
         e.preventDefault();
             try {
                 // Submit to server
-                await axios.post('http://localhost:5000/api/donate', formData);
+                await axios.post('http://localhost:5000/api/jobpost', formData);
                 // Navigate to confirmation page with amount as state
                 navigate('/confirmation', { state: { title: formData.title } });
             } catch (error) {
@@ -37,10 +39,10 @@ const DonationForm = () => {
 
     return (
         <div className="container mt-5">
-            <h1 className="text-center mb-4 text-primary">Project Submission Form</h1>
+            <h1 className="text-center mb-4 text-primary">Job Posting Form</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                    <label className="form-label">Project-Title</label>
+                    <label className="form-label">Job-Title</label>
                     <input
                         type="text"
                         className={`form-control ${formErrors.amount && 'is-invalid'}`}
@@ -64,16 +66,25 @@ const DonationForm = () => {
                     {formErrors.Description && <div className="invalid-feedback">{formErrors.Description}</div>}
                 </div>
                 <div className="mb-3">
-                    <label className="form-label">Roll Number</label>
+                    <label className="form-label">Role</label>
                     <input
                         type="text"
-                        className={`form-control ${formErrors.RollNumber && 'is-invalid'}`}
-                        placeholder="Enter Roll Number"
-                        name="RollNumber"
-                        value={formData.RollNumber}
+                        className={`form-control ${formErrors.Role && 'is-invalid'}`}
+                        placeholder="Enter Role"
+                        name="Role"
+                        value={formData.Role}
                         onChange={handleChange}
                     />
-                    {formErrors.RollNumber && <div className="invalid-feedback">{formErrors.RollNumber}</div>}
+                    {formErrors.Role && <div className="invalid-feedback">{formErrors.Role}</div>}
+                    <label className="form-label">End Date</label>
+                    <input
+                        type="text"
+                        className={`form-control ${formErrors.endDate && 'is-invalid'}`}
+                        placeholder="Enter End Date"
+                        name="endDate"
+                        value={formData.endDate}
+                        onChange={handleChange}
+                    />
                 </div>
                 <button type="submit" className="btn btn-primary">
                     UPLOAD
@@ -83,4 +94,4 @@ const DonationForm = () => {
     );
 };
 
-export default DonationForm;
+export default JobPostingForm;

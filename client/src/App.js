@@ -61,6 +61,9 @@ import DonationForm from './components/DonationForm/DonationForm';
 import ConfirmationPage from './components/ConfirmationPage/ConfirmationPage';
 import AdminLogin from './components/AdminLogin/AdminLogin'; // Import AdminLogin component
 import AdminDashboard from './components/AdminDashboard/AdminDashboard';
+import JobPostingForm from './components/JobPostingForm/JobPostingForm';
+import JobPostings from './components/JobPostings/JobPostings';
+import DonationPostings from './components/ProjectPostings/ProjectPostings';
 import './App.css'; // Import the CSS file
 
 function App() {
@@ -77,8 +80,12 @@ function App() {
                       <Route path="/AdminDashboard" element={<AdminDashboard />} />
                       <Route path="/contact" element={<Contact />} />
                       <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/job-form" element={<JobPostingForm/>} />
                       <Route path="/donation-form" element={<DonationForm />} />
+                      <Route path="/Job-form" element={<JobPostingForm />} />
                       <Route path="/confirmation" element={<ConfirmationPage />} />
+                      <Route path="/job-postings" element={<JobPostings />} />
+                      <Route path="/donation-postings" element={<DonationPostings />} />
                       {/* Add other routes as needed */}
                     </Routes> 
               </div>

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const donationSchema = new mongoose.Schema({
+const JobSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -9,10 +9,14 @@ const donationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    RollNumber: {
+    Role: {
         type: String,
         required: true
     },
+    endDate:{
+        type:String,
+        required:true
+    }
 });
 
-module.exports = mongoose.model('Projects', donationSchema);
+module.exports = mongoose.model('Job', JobSchema);

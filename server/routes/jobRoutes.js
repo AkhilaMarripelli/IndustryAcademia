@@ -1,23 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const Donation = require('../models/Donation');
+const Job = require('../models/Job');
 
 // @route   POST /api/donate
 // @desc    Handle donation form submissions
 // @access  Public
 router.post('/', async (req, res) => {
-    const { title, Description, RollNumber} = req.body;
+    const { title, Description, Role,endDate} = req.body;
 
     try {
-        const newDonation = new Donation({
+        const newJob = new Job({
             title,
             Description,
-            RollNumber
+            Role,
+            endDate
         });
 
-        await newDonation.save();
+        await newJob.save();
 
-        res.status(201).json({ message: 'Project Uploaded successfully' });
+        res.status(201).json({ message: 'Job Uploaded successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Server error' });

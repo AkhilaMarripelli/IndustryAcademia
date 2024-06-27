@@ -1,38 +1,25 @@
 import React from 'react';
-
+import { Link, useNavigate } from 'react-router-dom';
 const AdminDashboard = () => {
+  const navigate = useNavigate();
+
   const handleButtonClick = () => {
-    // URL of the Excel file located in the public directory
-    const fileUrl = '/jpmcxl.xlsx';
-    
-    // Create a link element
-    const link = document.createElement('a');
-    link.href = fileUrl;
-
-    // Set the download attribute for the link
-    link.setAttribute('download', 'jpmcxl.xlsx');
-
-    // Append the link to the body
-    document.body.appendChild(link);
-
-    // Programmatically click the link to trigger the download
-    link.click();
-
-    // Clean up by removing the link from the body
-    document.body.removeChild(link);
+      navigate('/job-form');
   };
-
+  const handleClick=()=>{
+    navigate('/job-postings');
+}
   return (
     <div className="container d-flex flex-column align-items-center vh-100">
     {/* Buttons */}
       <h1 className="text-center mx-auto justify-content-center border-2 p-2 border-cyan-300 mt-4 bg-cyan-100 rounded-lg">
-      Jaldhaara Foundation
+      Industry Academia
       </h1>
       <button className="btn btn-outline-primary text-lg mt-3" onClick={handleButtonClick}>
-      DONORS
+      Post Jobs
       </button>
       <div className="mt-auto mb-4">
-        <button className="btn btn-outline-primary text-lg" onClick={handleButtonClick}>Download</button>
+        <button className="btn btn-outline-primary text-lg" onClick={handleClick}>View Projects</button>
       </div>
     </div>
   );
